@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emilia Shakaeva | Junior Marketing Ops</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --bg-dark: #0d1117;
+            --card-dark: #161b22;
+            --text-main: #c9d1d9;
+            --accent-blue: #58a6ff;
+            --border-color: #30363d;
+            --radius: 20px;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+        }
+        .navbar {
+            background-color: var(--card-dark);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .navbar-brand, .nav-link {
+            color: var(--text-main) !important;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent-blue) !important;
+        }
+        .hero {
+            padding: 140px 0 120px;
+            border-bottom: 1px solid var(--border-color);
+            background: radial-gradient(circle at top right, rgba(88, 166, 255, 0.05), transparent);
+        }
+        .hero-content {
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .profile-photo {
+            width: 100%;
+            max-width: 320px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .hero h1 { color: #fff; font-weight: 800; font-size: 3.5rem; }
+        .hero .job-tag { color: var(--accent-blue); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; }
+        
+        .card {
+            background-color: var(--card-dark);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+        .card:hover { border-color: var(--accent-blue); }
+        .badge-skill {
+            background-color: #21262d;
+            color: var(--accent-blue);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            margin: 2px;
+            display: inline-block;
+        }
+        .section-title {
+            border-left: 4px solid var(--accent-blue);
+            padding-left: 20px;
+            margin-bottom: 30px;
+            color: #fff;
+            font-weight: 700;
+        }
+        .contact-btn {
+            background-color: var(--accent-blue);
+            color: #0d1117;
+            font-weight: 700;
+            border-radius: 12px;
+            padding: 12px 30px;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .contact-btn:hover { background-color: #79c0ff; color: #0d1117; transform: scale(1.05); }
+        hr { border-color: var(--border-color); opacity: 1; }
+        h4, h5, h6 { color: #fff; }
+        .text-muted { color: #8b949e !important; }
+        
+        .about-quote {
+            font-style: italic;
+            color: var(--accent-blue);
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin: 1.5rem 0;
+        }
+        
+        #contact {
+            background: linear-gradient(135deg, rgba(88,166,255,0.06), transparent);
+            border: 1px solid rgba(88,166,255,0.3);
+            border-radius: var(--radius);
+        }
+        .contact-icon {
+            font-size: 1.8rem;
+            color: var(--accent-blue);
+            min-width: 40px;
+        }
+        .contact-link {
+            color: var(--text-main);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .contact-link:hover {
+            color: var(--accent-blue);
+        }
+        .social-icon {
+            font-size: 1.4rem;
+            margin-right: 12px;
+            color: var(--accent-blue);
+        }
+
+        /* Portfolio Carousel */
+        .carousel-inner .carousel-item .row {
+            margin: 0;
+        }
+        .carousel-control-prev, .carousel-control-next {
+            width: 5%;
+            opacity: 0.7;
+        }
+        .carousel-indicators [data-bs-target] {
+            background-color: var(--accent-blue);
+        }
+
+        /* Shorts vertical aspect ratio */
+        .shorts-embed {
+            position: relative;
+            width: 100%;
+            padding-top: 177.78%; /* 9:16 = 177.78% */
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        .shorts-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Uniform media container */
+        .portfolio-media {
+            height: 300px; /* Фиксированная высота для всех медиа */
+            overflow: hidden;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000; /* Фон для видео/изображений с нестандартным соотношением */
+        }
+        .portfolio-media img, .portfolio-media iframe, .portfolio-media video {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Сохраняет пропорции, не обрезает, добавляет чёрные полосы если нужно */
+            width: auto;
+            height: auto;
+        }
+
+        /* Для коллажа */
+        .collage-grid img {
+            transition: transform 0.3s;
+        }
+        .collage-grid img:hover {
+            transform: scale(1.05);
+        }
+
+        @media (min-width: 992px) {
+            #about .container {
+                max-width: 700px;
+            }
+            .about-text {
+                background: none;
+                border: none;
+                padding: 0;
+            }
+            .carousel .carousel-item .col-lg-4 {
+                display: block !important;
+            }
+        }
+
+        footer { border-top: 1px solid var(--border-color); padding: 40px 0; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Emilia Shakaeva</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+                <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="container pt-5">
+        <div class="row align-items-center">
+            <div class="col-lg-7 text-start hero-content">
+                <p class="job-tag mb-2">Junior Marketing Operations Specialist</p>
+                <h1 class="mb-3">Emilia Shakaeva</h1>
+                <p class="lead text-muted mb-4" style="font-size: 1.25rem;">
+                    Building tech-driven marketing infrastructure and scaling brands on global marketplaces.
+                </p>
+                <a href="#contact" class="contact-btn">Contact Me</a>
+            </div>
+            <div class="col-lg-5 text-center mt-5 mt-lg-0">
+                <img src="photo.png" alt="Emilia Shakaeva" class="profile-photo">
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container my-5">
+
+    <!-- About Section -->
+    <section id="about" class="mb-5 pb-5" style="border-bottom: 1px solid var(--border-color);">
+        <h2 class="section-title">About</h2>
+        <div class="container about-text">
+            <h4 class="fw-bold mb-4">I build marketing systems, therefore I grow.</h4>
+            <p>
+                Young marketing operations specialist with hands-on experience scaling e-commerce brands on Amazon and social platforms. 
+                In 5 months at a US startup, I built full marketing & ops infrastructure — from influencer pipelines and AI content engines to payment funnels and legal-compliant landing pages.
+            </p>
+            <p class="about-quote">
+                “Marketing is more than campaigns. It’s building intelligent, scalable systems where creativity meets automation and data.”
+            </p>
+            <p>
+                I learn extremely fast — I quickly master new tools and independently dive deep into unfamiliar domains, whether it's a new ad platform, automation builder, legal compliance service, or anything else.
+            </p>
+        </div>
+    </section>
+
+    <div class="row">
+        <aside class="col-lg-4" id="skills">
+            <div class="card p-4 mb-4">
+                <h4 class="fw-bold mb-4">Technical Stack</h4>
+                
+                <div class="mb-4">
+                    <h6 class="text-muted small text-uppercase fw-bold mb-2">Web & Infrastructure</h6>
+                    <span class="badge badge-skill">Tilda / Stripe</span>
+                    <span class="badge badge-skill">GitHub / GoDaddy</span>
+                    <span class="badge badge-skill">HTML / CSS / JS (Basics)</span>
+                    <span class="badge badge-skill">Python (Basics)</span>
+                </div>
+                <div class="mb-4">
+                    <h6 class="text-muted small text-uppercase fw-bold mb-2">E-com & Ops</h6>
+                    <span class="badge badge-skill">Amazon Seller Central</span>
+                    <span class="badge badge-skill">ManyChat Automations</span>
+                    <span class="badge badge-skill">InfoPlus WMS</span>
+                    <span class="badge badge-skill">Meta & Pinterest Ads</span>
+                </div>
+                <div class="mb-2">
+                    <h6 class="text-muted small text-uppercase fw-bold mb-2">AI & Creative</h6>
+                    <span class="badge badge-skill">Advanced Prompting</span>
+                    <span class="badge badge-skill">Arena AI</span>
+                    <span class="badge badge-skill">CapCut / Figma / Canva</span>
+                </div>
+            </div>
+
+            <div class="card p-4 mb-4">
+                <h4 class="fw-bold mb-3">Languages</h4>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>English</span>
+                    <span class="fw-bold" style="color: var(--accent-blue);">B2</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Russian (native)</span>
+                    <span class="fw-bold" style="color: var(--accent-blue);">C2</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span>German</span>
+                    <span class="fw-bold" style="color: var(--accent-blue);">A2-B1</span>
+                </div>
+            </div>
+
+            <div class="card p-4">
+                <h4 class="fw-bold mb-3">Mindset & Education</h4>
+                <ul class="list-unstyled small text-muted">
+                    <li class="mb-3"><span class="fw-bold" style="color: var(--accent-blue);">✓</span> Strong analytical foundation from high school (CS & logic)</li>
+                    <li class="mb-3"><span class="fw-bold" style="color: var(--accent-blue);">✓</span> Self-taught developer mindset</li>
+                    <li class="mb-3"><span class="fw-bold" style="color: var(--accent-blue);">✓</span> Extremely fast learner — quickly master new tools and independently dive into unknown domains</li>
+                    <li><span class="fw-bold" style="color: var(--accent-blue);">✓</span> Rapid adoption of AI & automation technologies</li>
+                </ul>
+            </div>
+        </aside>
+
+        <section class="col-lg-8" id="experience">
+            <h2 class="section-title">Professional Experience</h2>
+            
+            <div class="card p-4 mb-4">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h4 class="fw-bold mb-0">Marketing Assistant / Ops Specialist</h4>
+                        <p style="color: var(--accent-blue);" class="fw-semibold mb-0">US Consumer Goods Startup (Ezflame)</p>
+                    </div>
+                </div>
+                <hr>
+                
+                <h6 class="fw-bold text-uppercase small text-muted">Influencer & Creator Management</h6>
+                <ul class="text-muted">
+                    <li><strong>Amazon Creator Connections:</strong> Processed 150+ applications, vetting top 41 creators based on content quality and audience alignment.</li>
+                    <li><strong>Full-cycle Management:</strong> Managed product logistics via Infoplus, quality control of video deliverables, and gathered product feedback for R&D.</li>
+                    <li><strong>Pinterest Outreach:</strong> Negotiated collaborations and generated 100+ AI-visuals for creator content.</li>
+                </ul>
+
+                <h6 class="fw-bold text-uppercase small text-muted mt-4">Web Development & Automation</h6>
+                <ul class="text-muted">
+                    <li><strong>Tilda & Stripe Integration:</strong> Built a fully functional e-commerce landing page with Stripe payment gateway and Google Sheets data sync.</li>
+                    <li><strong>Technical SEO & Compliance:</strong> Managed domain/subdomain setups (GoDaddy) and implemented legal documentation using Termly via custom code injections on GitHub.</li>
+                    <li><strong>Chatbot Funnels:</strong> Built ManyChat automations for Facebook lead gen, distributing coupons and tracking individual Amazon affiliate links.</li>
+                </ul>
+
+                <h6 class="fw-bold text-uppercase small text-muted mt-4">Content & Social Media</h6>
+                <ul class="text-muted">
+                    <li><strong>AI Content Engine:</strong> Created and adapted content for TikTok, IG, FB, and Pinterest using AI for image, video, and music generation.</li>
+                    <li><strong>Visual Assets:</strong> Designed One-pagers, listing photo funnels, flyers, and business cards in Figma.</li>
+                    <li><strong>Video Production:</strong> Produced assembly guides and "talking head" Reels with dynamic subtitles.</li>
+                </ul>
+
+                <h6 class="fw-bold text-uppercase small text-muted mt-4">Advertising & Analytics</h6>
+                <ul class="text-muted">
+                    <li><strong>Campaign Management:</strong> Supported Meta, Amazon, and Pinterest ad launches.</li>
+                    <li><strong>Competitive Intelligence:</strong> Conducted Amazon market analysis using third-party tools to track competitor pricing and sentiment.</li>
+                    <li><strong>Reporting:</strong> Maintained daily reports and complex Pivot Tables in Google Sheets to track ROAS and operational efficiency.</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="mt-5">
+        <h2 class="section-title">Portfolio</h2>
+
+        <div id="portfolioCarousel" class="carousel slide" data-bs-ride="false">
+            <!-- No indicators (progress bar removed) -->
+
+            <div class="carousel-inner">
+                <!-- Slide 1: 3 Reels -->
+                <div class="carousel-item active">
+                    <div class="row g-4">
+                        <!-- Reel 1 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card p-3 h-100">
+                                <div class="portfolio-media">
+                                    <div class="shorts-embed">
+                                        <iframe src="https://www.youtube.com/embed/4dfkyAlZr4o" title="Funny raccoons Ezflame reel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                                <h5 class="mt-3">Funny Raccoons Reel</h5>
+                                <p class="text-muted small">Fun AI-generated reel featuring raccoons — fully created with AI tools.</p>
+                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-reel1">View Fullscreen</button>
+                            </div>
+                        </div>
+
+                        <!-- Reel 2 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card p-3 h-100">
+                                <div class="portfolio-media">
+                                    <div class="shorts-embed">
+                                        <iframe src="https://www.youtube.com/embed/toNRE7qIb4k" title="AI inch-tall climber reel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                                <h5 class="mt-3">Inch-Tall Climber Reel</h5>
+                                <p class="text-muted small">Tiny rescuer climbs garland to the top of the fireplace — epic AI-generated shot.</p>
+                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-reel2">View Fullscreen</button>
+                            </div>
+                        </div>
+
+                        <!-- Reel 3 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card p-3 h-100">
+                                <div class="portfolio-media">
+                                    <div class="shorts-embed">
+                                        <iframe src="https://www.youtube.com/embed/KL7LPsjh-1c" title="Cozy tent fireplace scene" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                                <h5 class="mt-3">Cozy Tent Fireplace Scene</h5>
+                                <p class="text-muted small">Camera zooms into a tent revealing a relaxing moment by the Ezflame — pure AI generation.</p>
+                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-reel3">View Fullscreen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Assembly + Meta + Flyer -->
+                <div class="carousel-item">
+                    <div class="row g-4">
+                        <!-- Assembly Video -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card p-3 h-100">
+                                <div class="portfolio-media">
+                                    <iframe src="https://www.youtube.com/embed/yidzp8ZLLc4" title="Ezflame assembly instruction" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <h5 class="mt-3">Assembly Instruction Video</h5>
+                                <p class="text-muted small">Clear step-by-step montage for product assembly, edited in CapCut.</p>
+                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-assembly">View Fullscreen</button>
+                            </div>
+                        </div>
+
+                        <!-- Meta Table -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card p-3 h-100">
+                                <div class="portfolio-media">
+                                    <img src="meta.png" alt="Meta campaigns analysis table" class="img-fluid">
+                                </div>
+                                <h5 class="mt-3">Meta Ads Performance Table</h5>
+                                <p class="text-muted small">Comparative analysis of cost and effectiveness for Meta ad campaigns.</p>
+                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-meta">View Image</button>
+                            </div>
+                        </div>
+
+                        <!-- Flyer -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card p-3 h-100">
+                                <div class="portfolio-media">
+                                    <img src="flyer.png" alt="Ezflame promotional flyer" class="img-fluid">
+                                </div>
+                                <h5 class="mt-3">Promotional Flyer</h5>
+                                <p class="text-muted small">Flyer design for Ezflame promotion, created in Figma.</p>
+                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-flyer">View Image</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Tilda + Email + One-Pagers -->
+                <div class="carousel-item">
+                    <div class="row g-4">
+                        <!-- Tilda -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card p-3 h-100">
+                                <div class="portfolio-media">
+                                    <video controls class="w-100">
+                                        <source src="Tilda.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                                <h5 class="mt-3">Tilda Landing Page Walkthrough</h5>
+                                <p class="text-muted small">Screen recording of the e-commerce site with Stripe and Google Sheets integration.</p>
+                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-tilda">View Video</button>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card p-3 h-100">
+                                <div class="portfolio-media">
+                                    <img src="email.jpeg" alt="Personalized outreach email" class="img-fluid">
+                                </div>
+                                <h5 class="mt-3">Personalized Outreach Email</h5>
+                                <p class="text-muted small">Customized collaboration proposal with AI-inserted fireplace in recipient's interior photo.</p>
+                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-email">View Image</button>
+                            </div>
+                        </div>
+
+                        <!-- One-Pagers -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card p-3 h-100">
+                                <div class="portfolio-media">
+                                    <div class="row g-2">
+                                        <div class="col-6"><img src="one-pager1.png" alt="One-pager 1" class="img-fluid rounded"></div>
+                                        <div class="col-6"><img src="one-pager2.png" alt="One-pager 2" class="img-fluid rounded"></div>
+                                    </div>
+                                </div>
+                                <h5 class="mt-3">Creator One-Pager</h5>
+                                <p class="text-muted small">Information sheet for influencers, refined and updated in Figma.</p>
+                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-onepager">View Images</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Bloggers + ManyChat + AI Photos -->
+                <div class="carousel-item">
+                    <div class="row g-4">
+                        <!-- Bloggers -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card p-3 h-100">
+                                <div class="portfolio-media">
+                                    <img src="blogers.png" alt="Bloggers sourcing table" class="img-fluid">
+                                </div>
+                                <h5 class="mt-3">Bloggers Sourcing & Vetting Table</h5>
+                                <p class="text-muted small">Filtered list of bloggers by niche, engagement rate, and fake followers percentage.</p>
+                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-bloggers">View Image</button>
+                            </div>
+                        </div>
+
+                        <!-- ManyChat -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card p-3 h-100">
+                                <div class="portfolio-media">
+                                    <img src="manychat.jpeg" alt="ManyChat full funnel" class="img-fluid">
+                                </div>
+                                <h5 class="mt-3">ManyChat Automation Flow</h5>
+                                <p class="text-muted small">Complete funnel: coupon issuance, FAQ responses, push notifications, lead qualification.</p>
+                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-manychat">View Image</button>
+                            </div>
+                        </div>
+
+                        <!-- AI Photos Collage -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card p-3 h-100">
+                                <div class="portfolio-media">
+                                    <div class="row g-2 collage-grid">
+                                        <div class="col-6"><img src="p1.png" alt="AI visual 1" class="img-fluid rounded"></div>
+                                        <div class="col-6"><img src="p2.png" alt="AI visual 2" class="img-fluid rounded"></div>
+                                        <div class="col-6"><img src="p3.png" alt="AI visual 3" class="img-fluid rounded"></div>
+                                        <div class="col-6"><img src="p4.png" alt="AI visual 4" class="img-fluid rounded"></div>
+                                    </div>
+                                </div>
+                                <h5 class="mt-3">AI-Generated Visuals Pack for Pinterest Creator</h5>
+                                <p class="text-muted small">Sample from 100+ custom visuals generated with AI for one Pinterest collaboration.</p>
+                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-photos">View Collage</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#portfolioCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#portfolioCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="p-5 mt-5">
+        <div class="row align-items-center">
+            <div class="col-lg-5 mb-5 mb-lg-0">
+                <h2 class="fw-bold mb-4" style="color: #fff;">Let's Connect</h2>
+                <p class="text-muted mb-4 fs-5">
+                    Open to new opportunities, collaborations, and interesting projects in marketing operations, e-commerce, and AI-driven growth.
+                </p>
+            </div>
+            <div class="col-lg-7">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start">
+                            <i class="bi bi-envelope-fill contact-icon me-3"></i>
+                            <div>
+                                <h6 class="mb-1">Email</h6>
+                                <a href="mailto:emiliaar7l@gmail.com" class="contact-link fs-5">emiliaar7l@gmail.com</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start">
+                            <i class="bi bi-telephone-fill contact-icon me-3"></i>
+                            <div>
+                                <h6 class="mb-1">Phone</h6>
+                                <a href="tel:+79992173339" class="contact-link fs-5">+7 (999) 217-33-39</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start">
+                            <i class="bi bi-whatsapp contact-icon me-3"></i>
+                            <div>
+                                <h6 class="mb-1">WhatsApp</h6>
+                                <a href="https://wa.me/79992173339" target="_blank" class="contact-link fs-5">+7 (999) 217-33-39</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start">
+                            <i class="bi bi-telegram contact-icon me-3"></i>
+                            <div>
+                                <h6 class="mb-1">Telegram</h6>
+                                <a href="https://t.me/FreiHirn" target="_blank" class="contact-link fs-5">@FreiHirn</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start">
+                            <i class="bi bi-facebook contact-icon me-3 social-icon"></i>
+                            <div>
+                                <h6 class="mb-1">Facebook</h6>
+                                <a href="https://www.facebook.com/profile.php?id=100082798489952" target="_blank" class="contact-link fs-5">Emilia Shakaeva</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start">
+                            <i class="bi bi-instagram contact-icon me-3 social-icon"></i>
+                            <div>
+                                <h6 class="mb-1">Instagram</h6>
+                                <a href="https://www.instagram.com/emilia_7l" target="_blank" class="contact-link fs-5">@emilia_7l</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="text-center text-muted">
+    <div class="container">
+        <small>© 2026 EMILIA SHAKAEVA | JUNIOR MARKETING OPERATIONS</small>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- All Modal Windows (place this right before </body>) -->
+<!-- Reel 1 -->
+<div class="modal fade" id="modal-reel1" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-dark border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <iframe width="100%" height="600" src="https://www.youtube.com/embed/4dfkyAlZr4o" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reel 2 -->
+<div class="modal fade" id="modal-reel2" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-dark border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <iframe width="100%" height="600" src="https://www.youtube.com/embed/toNRE7qIb4k" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reel 3 -->
+<div class="modal fade" id="modal-reel3" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-dark border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <iframe width="100%" height="600" src="https://www.youtube.com/embed/KL7LPsjh-1c" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Assembly Video -->
+<div class="modal fade" id="modal-assembly" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-dark border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <iframe width="100%" height="600" src="https://www.youtube.com/embed/yidzp8ZLLc4" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Meta Table -->
+<div class="modal fade" id="modal-meta" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content bg-dark border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-3 text-center">
+                <img src="meta.png" alt="Meta campaigns table" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Flyer -->
+<div class="modal fade" id="modal-flyer" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content bg-dark border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-3 text-center">
+                <img src="flyer.png" alt="Promotional flyer" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tilda Video -->
+<div class="modal fade" id="modal-tilda" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-dark border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <video controls width="100%" height="600">
+                    <source src="Tilda.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Personalized Email -->
+<div class="modal fade" id="modal-email" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content bg-dark border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-3 text-center">
+                <img src="email.jpeg" alt="Personalized email" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- One-Pagers -->
+<div class="modal fade" id="modal-onepager" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content bg-dark border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-3">
+                <div class="row g-3">
+                    <div class="col-12 col-md-6"><img src="one-pager1.png" alt="One-pager 1" class="img-fluid rounded"></div>
+                    <div class="col-12 col-md-6"><img src="one-pager2.png" alt="One-pager 2" class="img-fluid rounded"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bloggers Table -->
+<div class="modal fade" id="modal-bloggers" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content bg-dark border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-3 text-center">
+                <img src="blogers.png" alt="Bloggers table" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ManyChat -->
+<div class="modal fade" id="modal-manychat" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content bg-dark border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-3 text-center">
+                <img src="manychat.jpeg" alt="ManyChat funnel" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AI Photos Collage -->
+<div class="modal fade" id="modal-photos" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-dark border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="row g-3">
+                    <div class="col-12 col-md-6"><img src="p1.png" alt="AI visual 1" class="img-fluid rounded"></div>
+                    <div class="col-12 col-md-6"><img src="p2.png" alt="AI visual 2" class="img-fluid rounded"></div>
+                    <div class="col-12 col-md-6"><img src="p3.png" alt="AI visual 3" class="img-fluid rounded"></div>
+                    <div class="col-12 col-md-6"><img src="p4.png" alt="AI visual 4" class="img-fluid rounded"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

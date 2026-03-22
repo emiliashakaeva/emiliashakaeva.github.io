@@ -220,7 +220,8 @@
     };
 
     langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.langTarget)));
-    setLang(localStorage.getItem('lang') || 'en');
+    const urlLang = new URLSearchParams(window.location.search).get('lang');
+    setLang(urlLang || localStorage.getItem('lang') || 'en');
 
     // 📱 Menu
     if (toggle && panel) {

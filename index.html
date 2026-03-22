@@ -1,818 +1,198 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emilia Shakaeva | Junior Marketing Ops</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <style>
-        :root {
-            --bg-dark: #0d1117;
-            --card-dark: #161b22;
-            --text-main: #c9d1d9;
-            --accent-blue: #58a6ff;
-            --border-color: #30363d;
-            --radius: 20px;
-        }
-        html {
-            scroll-behavior: smooth;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-        }
-        .navbar {
-            background-color: var(--card-dark);
-            border-bottom: 1px solid var(--border-color);
-        }
-        .navbar-brand, .nav-link {
-            color: var(--text-main) !important;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: var(--accent-blue) !important;
-        }
-        .hero {
-            padding: 140px 0 120px;
-            border-bottom: 1px solid var(--border-color);
-            background: radial-gradient(circle at top right, rgba(88, 166, 255, 0.05), transparent);
-        }
-        .hero-content {
-            opacity: 0;
-            animation: fadeIn 1s ease-in forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .profile-photo {
-            width: 100%;
-            max-width: 320px;
-            border-radius: var(--radius);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-        .hero h1 { color: #fff; font-weight: 800; font-size: 3.5rem; }
-        .hero .job-tag { color: var(--accent-blue); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; }
-        
-        .card {
-            background-color: var(--card-dark);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            border-radius: var(--radius);
-            transition: all 0.3s ease;
-        }
-        .card:hover { border-color: var(--accent-blue); }
-        .badge-skill {
-            background-color: #21262d;
-            color: var(--accent-blue);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 5px 10px;
-            font-size: 0.8rem;
-            margin: 2px;
-            display: inline-block;
-        }
-        .section-title {
-            border-left: 4px solid var(--accent-blue);
-            padding-left: 20px;
-            margin-bottom: 30px;
-            color: #fff;
-            font-weight: 700;
-        }
-        .contact-btn {
-            background-color: var(--accent-blue);
-            color: #0d1117;
-            font-weight: 700;
-            border-radius: 12px;
-            padding: 12px 30px;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .contact-btn:hover { background-color: #79c0ff; color: #0d1117; transform: scale(1.05); }
-        hr { border-color: var(--border-color); opacity: 1; }
-        h4, h5, h6 { color: #fff; }
-        .text-muted { color: #8b949e !important; }
-        
-        .about-quote {
-            font-style: italic;
-            color: var(--accent-blue);
-            font-weight: 500;
-            font-size: 1.1rem;
-            margin: 1.5rem 0;
-        }
-        
-        #contact {
-            background: linear-gradient(135deg, rgba(88,166,255,0.06), transparent);
-            border: 1px solid rgba(88,166,255,0.3);
-            border-radius: var(--radius);
-        }
-        .contact-icon {
-            font-size: 1.8rem;
-            color: var(--accent-blue);
-            min-width: 40px;
-        }
-        .contact-link {
-            color: var(--text-main);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        .contact-link:hover {
-            color: var(--accent-blue);
-        }
-        .social-icon {
-            font-size: 1.4rem;
-            margin-right: 12px;
-            color: var(--accent-blue);
-        }
-
-        /* Portfolio Carousel */
-        .carousel-inner .carousel-item .row {
-            margin: 0;
-        }
-        .carousel-control-prev, .carousel-control-next {
-            width: 5%;
-            opacity: 0.7;
-        }
-        .carousel-indicators [data-bs-target] {
-            background-color: var(--accent-blue);
-        }
-
-        /* Shorts vertical aspect ratio */
-        .shorts-embed {
-            position: relative;
-            width: 100%;
-            padding-top: 177.78%; /* 9:16 = 177.78% */
-            overflow: hidden;
-            border-radius: 12px;
-        }
-        .shorts-embed iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Uniform media container */
-        .portfolio-media {
-            height: 300px; /* Фиксированная высота для всех медиа */
-            overflow: hidden;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #000; /* Фон для видео/изображений с нестандартным соотношением */
-        }
-        .portfolio-media img, .portfolio-media iframe, .portfolio-media video {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain; /* Сохраняет пропорции, не обрезает, добавляет чёрные полосы если нужно */
-            width: auto;
-            height: auto;
-        }
-
-        /* Для коллажа */
-        .collage-grid img {
-            transition: transform 0.3s;
-        }
-        .collage-grid img:hover {
-            transform: scale(1.05);
-        }
-
-        @media (min-width: 992px) {
-            #about .container {
-                max-width: 700px;
-            }
-            .about-text {
-                background: none;
-                border: none;
-                padding: 0;
-            }
-            .carousel .carousel-item .col-lg-4 {
-                display: block !important;
-            }
-        }
-
-        footer { border-top: 1px solid var(--border-color); padding: 40px 0; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-en="Emilia Shakaeva | Marketing Operations, Growth & AI Systems" data-ru="Эмилия Шакаева | Маркетинговые операции, рост и ИИ-системы">Emilia Shakaeva | Marketing Operations, Growth & AI Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="icon" type="image/png" href="logo.png">
+  <style>
+    :root{--text:#e8eef7;--muted:#9daec5;--accent:#7fd0ff;--accent2:#a5f0ff;--warm:#ffb36b;--line:rgba(156,194,255,.14);--line2:rgba(138,191,255,.28);--bg:#08111f;--panel:rgba(10,19,34,.92);--shadow:0 24px 80px rgba(0,0,0,.35);--r-xl:32px;--r-lg:24px;--r-md:18px;--wrap:min(1180px,calc(100vw - 32px));--nav-h:82px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:"Manrope",sans-serif;color:var(--text);background:radial-gradient(circle at top left,rgba(127,208,255,.14),transparent 32%),radial-gradient(circle at 85% 10%,rgba(255,179,107,.14),transparent 28%),linear-gradient(180deg,#09111e 0%,#08101b 45%,#070d18 100%);min-height:100vh;overflow-x:hidden}body::before,body::after{content:"";position:fixed;width:32rem;height:32rem;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:-1;opacity:.55}body::before{top:-9rem;right:-10rem;background:rgba(97,194,255,.18);animation:drift 16s ease-in-out infinite alternate}body::after{bottom:-12rem;left:-8rem;background:rgba(255,179,107,.12);animation:drift 18s ease-in-out infinite alternate-reverse}
+    a{color:inherit;text-decoration:none}img,video,iframe{display:block;max-width:100%}button{font:inherit}.wrap{width:var(--wrap);margin:0 auto}
+    .header{position:sticky;top:0;z-index:50;background:rgba(7,13,24,.72);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.05)}.nav{min-height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:1rem}.brand{display:flex;flex-direction:column;gap:.2rem;font-weight:800;letter-spacing:-.03em}.brand small{color:var(--muted);font-size:.77rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase}.toggle{display:none;width:48px;height:48px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--text);cursor:pointer}.nav-panel{display:flex;align-items:center;gap:1rem;margin-left:auto}.links{display:flex;gap:.35rem;flex-wrap:wrap}.nav-link{padding:.72rem .95rem;border-radius:999px;color:var(--muted);font-size:.95rem;font-weight:700;transition:.24s}.nav-link:hover,.nav-link.active{color:var(--text);background:rgba(127,208,255,.1);transform:translateY(-1px)}.lang{display:inline-flex;align-items:center;padding:.28rem;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);gap:.2rem}.lang button{border:0;background:transparent;color:var(--muted);min-width:52px;padding:.58rem .8rem;border-radius:999px;font-weight:800;cursor:pointer}.lang .active{background:linear-gradient(135deg,rgba(127,208,255,.94),rgba(165,240,255,.92));color:#07111d}
+    .hero{padding:4.5rem 0 3rem}.hero-box{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:var(--r-xl);background:linear-gradient(135deg,rgba(127,208,255,.07),rgba(255,255,255,.03)),rgba(8,15,28,.84);box-shadow:var(--shadow);padding:clamp(1.5rem,4vw,3rem)}.hero-box::before{content:"";position:absolute;inset:-25% auto auto 55%;width:18rem;height:18rem;border-radius:50%;background:radial-gradient(circle,rgba(127,208,255,.26),transparent 68%);filter:blur(10px)}.hero-grid{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(280px,.82fr);gap:clamp(1.5rem,4vw,3rem);align-items:center;position:relative;z-index:1}.eyebrow{display:inline-flex;align-items:center;gap:.6rem;margin:0 0 1rem;color:var(--accent);text-transform:uppercase;letter-spacing:.16em;font-size:.79rem;font-weight:800}.eyebrow::before{content:"";width:2.5rem;height:1px;background:currentColor;opacity:.7}.hero h1{margin:0;font-size:clamp(2.4rem,6vw,5.3rem);line-height:.95;letter-spacing:-.06em}.lead{margin:1.15rem 0 0;max-width:38rem;color:var(--muted);font-size:clamp(1.02rem,2vw,1.38rem);line-height:1.7}.actions{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:2rem}.btn,.slider-btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;border-radius:999px;font-weight:800;cursor:pointer;transition:.24s}.btn-primary{padding:.95rem 1.45rem;color:#08111f;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 14px 30px rgba(127,208,255,.22)}.btn-secondary{padding:.95rem 1.25rem;border:1px solid var(--line2);background:rgba(255,255,255,.03)}.btn:hover,.slider-btn:hover{transform:translateY(-2px)}.hero-note{margin-top:1.25rem;color:var(--muted);font-size:.94rem}.visual{display:flex;justify-content:center}.frame{position:relative;width:min(100%,380px);aspect-ratio:.9;padding:1rem;border-radius:38px;background:linear-gradient(180deg,rgba(127,208,255,.16),rgba(255,255,255,.03));border:1px solid rgba(127,208,255,.18);box-shadow:0 26px 70px rgba(0,0,0,.34);overflow:hidden}.frame::before{content:"";position:absolute;inset:1rem;border-radius:26px;border:1px solid rgba(255,255,255,.08)}.photo{width:100%;height:100%;object-fit:cover;border-radius:24px}.chip{position:absolute;display:inline-flex;align-items:center;gap:.45rem;padding:.7rem .95rem;border-radius:999px;background:rgba(7,14,25,.76);border:1px solid rgba(255,255,255,.08);box-shadow:0 14px 34px rgba(0,0,0,.24);backdrop-filter:blur(14px);font-size:.82rem;font-weight:700;animation:bob 4.8s ease-in-out infinite}.chip i{color:var(--warm)}.chip.top{top:1.2rem;left:-.75rem}.chip.bottom{right:-.5rem;bottom:1.2rem;animation-delay:.8s}
+    main{padding-bottom:4rem}.section{padding:2rem 0 0;scroll-margin-top:calc(var(--nav-h) + 18px)}.head{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1.5rem}.kicker{margin:0 0 .6rem;color:var(--accent);font-size:.82rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.title{margin:0;font-size:clamp(1.7rem,3.2vw,2.8rem);letter-spacing:-.04em}.summary{max-width:38rem;color:var(--muted);line-height:1.7}.panel{border:1px solid var(--line);border-radius:var(--r-lg);background:linear-gradient(180deg,rgba(14,22,37,.96),rgba(9,17,31,.94));box-shadow:var(--shadow)}
+    .about{padding:clamp(1.4rem,3vw,2.3rem);display:grid;gap:1.1rem}.about h3{margin:0;font-size:clamp(1.4rem,2.7vw,2.2rem);line-height:1.2;letter-spacing:-.04em}.about p{margin:0;color:var(--muted);line-height:1.78}.quote{padding:1rem 1.15rem;border-left:3px solid var(--accent);border-radius:0 18px 18px 0;background:rgba(127,208,255,.06);color:#d8efff;font-weight:600}
+    .columns{display:grid;grid-template-columns:minmax(300px,.9fr) minmax(0,1.45fr);gap:1.5rem;align-items:stretch}.side{display:grid;grid-template-rows:auto minmax(0,1fr);gap:1.5rem;height:100%}.card-pad{padding:clamp(1.25rem,2.4vw,2rem)}.groups{display:grid;gap:1.15rem}.group-title{margin:0 0 .55rem;color:var(--muted);font-size:.77rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.badges{display:flex;flex-wrap:wrap;gap:.55rem}.badge{display:inline-flex;align-items:center;min-height:2.2rem;padding:.5rem .78rem;border-radius:999px;border:1px solid rgba(127,208,255,.14);background:rgba(127,208,255,.06);color:#dff7ff;font-size:.88rem;line-height:1.3}.mindset{display:flex;flex-direction:column;min-height:100%}.mindset ul{list-style:none;padding:0;margin:0;display:grid;gap:.9rem;height:100%}.mindset li{display:grid;grid-template-columns:auto 1fr;gap:.8rem;align-items:start;padding:.95rem 1rem;border-radius:18px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);color:var(--muted);line-height:1.65}.mindset i{color:var(--accent);margin-top:.15rem}
+    .experience{height:100%}.company{color:var(--accent);font-weight:700}.exp-groups{display:grid;gap:1rem}.exp{padding:1rem 1rem 1rem 1.1rem;border-radius:20px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05)}.exp-title{margin:0 0 .75rem;color:var(--muted);font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.exp ul{list-style:none;margin:0;padding:0;display:grid;gap:.65rem}.exp li{position:relative;padding-left:1rem;color:#dce5f2;line-height:1.65}.exp li::before{content:"";position:absolute;left:0;top:.72rem;width:.42rem;height:.42rem;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--warm));box-shadow:0 0 0 5px rgba(127,208,255,.08)}
+    .portfolio-shell{position:relative}.viewport{overflow:hidden;padding:.2rem 0}.track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 2rem)/3);gap:1rem;transition:transform .55s cubic-bezier(.22,1,.36,1)}.work{overflow:hidden;display:flex;flex-direction:column;transition: transform .25s ease, box-shadow .25s ease}.work:hover{border-color:var(--line2);transform: translateY(-6px);box-shadow: 0 20px 50px rgba(0,0,0,.35)}.media{position:relative;aspect-ratio:16/10;border-radius:var(--r-md);overflow:hidden;background:rgba(0,0,0,.35);cursor:pointer;padding:0;border:0}.media::after{content:attr(data-preview);position:absolute;right:1rem;bottom:1rem;padding:.45rem .75rem;border-radius:999px;background:rgba(7,14,25,.8);border:1px solid rgba(255,255,255,.08);color:#fff;font-size:.76rem;font-weight:800;letter-spacing:.04em;opacity:0;transform:translateY(8px);transition:.24s;z-index:2}.work:hover .media::after,.media:focus-visible::after{opacity:1;transform:translateY(0)}.media img,.media video,.media iframe{width:100%;height:100%;object-fit:cover;border:0}.copy{padding:1.15rem 1.15rem 1.3rem;display:grid;gap:.75rem;flex:1}.copy p{margin:0;color:var(--muted);line-height:1.7}.meta{display:flex;align-items:center;justify-content:space-between;gap:.7rem;color:var(--accent);font-size:.82rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.slider-btn{position:absolute;top:50%;z-index:2;width:3.2rem;height:3.2rem;border:1px solid rgba(255,255,255,.08);background:rgba(7,14,25,.84);color:var(--text);transform:translateY(-50%);box-shadow:0 12px 34px rgba(0,0,0,.22)}.slider-btn:disabled{opacity:.36;cursor:default}.prev{left:-2.5rem}.next{right:-2.5rem}.slider-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1rem}.status{color:var(--muted);font-size:.92rem}
+    .contact{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:1.25rem;align-items:start}.contact p{color:var(--muted);line-height:1.75}.contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.contact-item{display:flex;gap:.9rem;padding:1rem;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05)}.contact-item i{color:var(--accent);font-size:1.25rem;margin-top:.1rem}.contact-item h4{margin:0 0 .35rem;font-size:.95rem}.contact-item a{color:#eaf6ff;word-break:break-word}.contact-item a:hover{color:var(--accent)}footer{border-top:1px solid rgba(255,255,255,.06);padding:1.5rem 0 2.2rem;color:var(--muted);text-align:center}
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}.reveal.show{opacity:1;transform:translateY(0)}.modal{position:fixed;inset:0;display:grid;place-items:center;padding:1.5rem;background:rgba(4,8,15,.84);backdrop-filter:blur(12px);opacity:0;pointer-events:none;transition:opacity .26s ease;z-index:90}.modal.open{opacity:1;pointer-events:auto}.dialog{position:relative;width:min(100%,1040px);max-height:min(88vh,920px);border-radius:24px;border:1px solid rgba(255,255,255,.08);background:rgba(7,14,25,.98);overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.42);transform:translateY(18px) scale(.98);transition:transform .3s ease}.modal.open .dialog{transform:translateY(0) scale(1)}.close{position:absolute;top:1rem;right:1rem;z-index:2;width:2.75rem;height:2.75rem;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.45);color:#fff;cursor:pointer}.modal-body{width:100%;height:min(82vh,760px);background:#000}.modal-body img,.modal-body video,.modal-body iframe{width:100%;height:100%;object-fit:contain;background:#000}.mobile-only{display:none}
+    @keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-20px,18px,0) scale(1.08)}}@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    @media (max-width:1100px){.prev{left:-.8rem}.next{right:-.8rem}}
+    @media (max-width:980px){:root{--wrap:min(100vw - 24px,1000px)}.toggle{display:inline-flex;align-items:center;justify-content:center}.nav-panel{position:absolute;top:calc(100% + 10px);left:12px;right:12px;display:grid;gap:.9rem;padding:1rem;border-radius:24px;border:1px solid var(--line);background:rgba(7,14,25,.96);box-shadow:var(--shadow);opacity:0;pointer-events:none;transform:translateY(-8px);transition:.24s}.nav-panel.open{opacity:1;pointer-events:auto;transform:translateY(0)}.links{flex-direction:column;align-items:stretch}.nav-link{padding:.85rem 1rem}.hero{padding-top:1.5rem}.hero-grid,.columns,.contact{grid-template-columns:1fr}.side{grid-template-rows:auto auto}.contact-grid{grid-template-columns:1fr 1fr}.slider-btn{display:none}.track{grid-auto-columns:calc((100% - 1rem)/2)}}
+    @media (max-width:720px){:root{--nav-h:74px;--wrap:calc(100vw - 20px)}.header{background:rgba(7,13,24,.84)}.brand{font-size:.98rem}.brand small{font-size:.68rem}.hero-box{padding:1rem}.hero-grid{gap:1.25rem}.visual{order:-1}.hero-copy{text-align:center}.eyebrow{justify-content:center}.lead,.hero-note,.summary{max-width:none}.actions{justify-content:center}.frame{width:min(100%,320px)}.chip.top{top:.8rem;left:.4rem}.chip.bottom{right:.4rem;bottom:.8rem}.section{padding-top:1.4rem}.head{align-items:start}.track{grid-auto-columns:100%}.slider-foot{flex-direction:column;align-items:flex-start}.contact-grid{grid-template-columns:1fr}.modal{padding:.75rem}.dialog{width:100%;border-radius:20px}.modal-body{height:min(72vh,520px)}.mobile-only{display:inline-flex}}
+    @media (max-width:480px){.btn{width:100%}.chip{font-size:.74rem;padding:.58rem .78rem}.copy,.card-pad,.about{padding-left:1rem;padding-right:1rem}.badge{font-size:.81rem}.exp li,.mindset li,.about p,.copy p,.contact p{font-size:.95rem}}
+    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+  </style>
 </head>
 <body>
+  <header class="header">
+    <div class="wrap nav">
+      <a class="brand" href="#top" style="flex-direction:row; align-items:center; gap:.6rem;">
+        <img src="logo.png" alt="" style="width:28px; height:28px; border-radius:6px;">
+        <div style="display:flex; flex-direction:column;">
+          <span data-en="Emilia Shakaeva" data-ru="Эмилия Шакаева">Emilia Shakaeva</span>
+          <small data-en="Marketing Operations, Growth & AI Systems" data-ru="Маркетинговые операции, рост и ИИ-системы">Marketing Operations, Growth & AI Systems</small>
+        </div>
+      </a>
+      <button class="toggle" type="button" aria-expanded="false" aria-controls="navPanel"><i class="bi bi-list"></i></button>
+      <div class="nav-panel" id="navPanel">
+        <nav class="links">
+          <a class="nav-link" href="#about" data-en="About" data-ru="Обо мне">About</a>
+          <a class="nav-link" href="#skills-experience" data-en="Skills & Experience" data-ru="Навыки и опыт">Skills & Experience</a>
+          <a class="nav-link" href="#portfolio" data-en="Portfolio" data-ru="Портфолио">Portfolio</a>
+          <a class="nav-link" href="#contact" data-en="Contact" data-ru="Контакты">Contact</a>
+        </nav>
+        <div class="lang">
+          <button class="active" type="button" data-lang-target="en">EN</button>
+          <button type="button" data-lang-target="ru">RU</button>
+        </div>
+      </div>
+    </div>
+  </header>
 
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="#">Emilia Shakaeva</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-                <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
-                <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-box reveal">
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <p class="eyebrow" data-en="AI-Driven Marketing & Growth Specialist" data-ru="AI-ориентированный специалист по маркетингу и росту">AI-Driven Marketing & Growth Specialist</p>
+              <h1 data-en="Emilia Shakaeva" data-ru="Эмилия Шакаева">Emilia Shakaeva</h1>
+              <p class="lead" data-en="Building and scaling AI-driven marketing systems that drive real product growth" data-ru="Строю и масштабирую маркетинговые системы с использованием AI, которые приводят к реальному росту продукта">Building and scaling AI-driven marketing systems that drive real product growth</p>
+              <div class="actions">
+                <a href="#contact" class="btn btn-primary" data-en="Contact Me" data-ru="Связаться">Contact Me</a>
+              </div>
+            </div>
+            <div class="visual">
+              <div class="frame">
+                <img src="photo.png" alt="Emilia Shakaeva" class="photo" loading="lazy">
+                <div class="chip top"><i class="bi bi-stars"></i><span data-en="AI + content systems" data-ru="AI + контент-системы">AI + content systems</span></div>
+                <div class="chip bottom"><i class="bi bi-graph-up-arrow"></i><span data-en="Growth operations" data-ru="Рост и маркетинговые операции">Growth operations</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="about">
+      <div class="wrap">
+        <article class="panel about reveal">
+          <div class="head reveal"><div><p class="kicker" data-en="About" data-ru="Обо мне">About</p></div></div>
+          <h3 data-en="I work across the full marketing cycle — from content and creators to funnels, ads, and analytics." data-ru="Работаю со всем маркетинговым циклом — от контента и блогеров до воронок, рекламы и аналитики.">I work across the full marketing cycle — from content and creators to funnels, ads, and analytics.</h3>
+          <p data-en="I built and scaled a product on Amazon, managing everything from influencer campaigns and content systems to funnels, ads, and analytics." data-ru="Я занималась развитием и масштабированием продукта на Amazon — от работы с инфлюенсерами и контент-систем до воронок, рекламы и аналитики.">I built and scaled a product on Amazon, managing everything from influencer campaigns and content systems to funnels, ads, and analytics.</p>
+          <p data-en="I quickly adapt to new tools and workflows, independently mastering unfamiliar systems and turning them into working solutions." data-ru="Я быстро адаптируюсь к новым инструментам и процессам, самостоятельно осваиваю незнакомые системы и превращаю их в рабочие решения.">I quickly adapt to new tools and workflows, independently mastering unfamiliar systems and turning them into working solutions.</p>
+          <p class="quote" data-en="Marketing is not just campaigns — it’s building systems where creativity, data, and automation work together." data-ru="Маркетинг — это не просто кампании, а системы, где креатив, данные и автоматизация работают вместе и усиливают друг друга.">Marketing is not just campaigns — it’s building systems where creativity, data, and automation work together.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="skills-experience">
+      <div class="wrap columns">
+        <aside class="side">
+          <article class="panel card-pad reveal">
+            <p class="kicker" data-en="Skills" data-ru="Навыки">Skills</p>
+            <div class="groups">
+              <section><p class="group-title" data-en="AI & Automation" data-ru="AI и автоматизация">AI & Automation</p><div class="badges"><span class="badge" data-en="Content generation" data-ru="Генерация контента">Content generation</span><span class="badge" data-en="Research" data-ru="Исследования">Research</span><span class="badge" data-en="Workflow automation" data-ru="Автоматизация процессов">Workflow automation</span></div></section>
+              <section><p class="group-title" data-en="Marketing" data-ru="Маркетинг">Marketing</p><div class="badges"><span class="badge" data-en="Influencer marketing" data-ru="Инфлюенсер-маркетинг">Influencer marketing</span><span class="badge" data-en="Content strategy" data-ru="Контент-стратегия">Content strategy</span><span class="badge" data-en="Outreach" data-ru="Аутрич и рассылки">Outreach</span><span class="badge" data-en="Funnels" data-ru="Воронки">Funnels</span></div></section>
+              <section><p class="group-title" data-en="Platforms" data-ru="Платформы">Platforms</p><div class="badges"><span class="badge">Amazon</span><span class="badge">Instagram</span><span class="badge">TikTok</span><span class="badge">YouTube</span><span class="badge">Pinterest</span><span class="badge">Facebook</span></div></section>
+              <section><p class="group-title" data-en="Tools" data-ru="Инструменты">Tools</p><div class="badges"><span class="badge">Figma</span><span class="badge">Canva</span><span class="badge">CapCut</span><span class="badge">ManyChat</span><span class="badge">Google Workspace</span><span class="badge">Microsoft Office</span></div></section>
+              <section><p class="group-title" data-en="Tech" data-ru="Технологии">Tech</p><div class="badges"><span class="badge" data-en="HTML/CSS/JavaScript (basic)" data-ru="HTML/CSS/JavaScript (basic)">HTML/CSS/JavaScript (basic)</span><span class="badge" data-en="Python (basic)" data-ru="Python (basic)">Python (basic)</span><span class="badge">Amazon Seller Central</span></div></section>
+              <section><p class="group-title" data-en="Analytics" data-ru="Аналитика">Analytics</p><div class="badges"><span class="badge" data-en="Campaign analysis" data-ru="Анализ кампаний">Campaign analysis</span><span class="badge" data-en="Competitor research" data-ru="Анализ конкурентов">Competitor research</span></div></section>
+              <section><p class="group-title" data-en="Languages" data-ru="Языки">Languages</p><div class="badges"><span class="badge" data-en="Russian (native)" data-ru="Русский (родной)">Russian (native)</span><span class="badge" data-en="English (B2)" data-ru="Английский (B2)">English (B2)</span><span class="badge" data-en="German (A2-B1)" data-ru="Немецкий (A2-B1)">German (A2-B1)</span></div></section>
+            </div>
+          </article>
+          <article class="panel card-pad mindset reveal">
+            <p class="kicker" data-en="Mindset" data-ru="Мышление">Mindset</p>
+            <h3 data-en="Mindset" data-ru="Мышление">Mindset</h3>
+            <ul>
+              <li><i class="bi bi-check2-circle"></i><span data-en="I quickly adapt to new tools and environments, independently mastering unfamiliar systems and workflows." data-ru="Быстро осваиваю новые инструменты и процессы, самостоятельно разбираюсь в незнакомых системах и превращаю их в рабочие решения.">I quickly adapt to new tools and environments, independently mastering unfamiliar systems and workflows.</span></li>
+              <li><i class="bi bi-check2-circle"></i><span data-en="I combine analytical thinking with creativity: I can structure processes, work with data, and at the same time generate ideas and content." data-ru="Сочетаю аналитическое мышление с креативом: умею выстраивать процессы, работать с данными и одновременно генерировать идеи и контент.">I combine analytical thinking with creativity: I can structure processes, work with data, and at the same time generate ideas and content.</span></li>
+              <li><i class="bi bi-check2-circle"></i><span data-en="I focus on efficiency, constantly looking for ways to automate, simplify, and scale marketing processes using AI." data-ru="Ориентируюсь на эффективность — постоянно ищу способы упростить, автоматизировать и масштабировать маркетинг с помощью AI.">I focus on efficiency, constantly looking for ways to automate, simplify, and scale marketing processes using AI.</span></li>
             </ul>
-        </div>
-    </div>
-</nav>
-
-<header class="hero">
-    <div class="container pt-5">
-        <div class="row align-items-center">
-            <div class="col-lg-7 text-start hero-content">
-                <p class="job-tag mb-2">Junior Marketing Operations Specialist</p>
-                <h1 class="mb-3">Emilia Shakaeva</h1>
-                <p class="lead text-muted mb-4" style="font-size: 1.25rem;">
-                    Building tech-driven marketing infrastructure and scaling brands on global marketplaces.
-                </p>
-                <a href="#contact" class="contact-btn">Contact Me</a>
-            </div>
-            <div class="col-lg-5 text-center mt-5 mt-lg-0">
-                <img src="photo.png" alt="Emilia Shakaeva" class="profile-photo">
-            </div>
-        </div>
-    </div>
-</header>
-
-<main class="container my-5">
-
-    <!-- About Section -->
-    <section id="about" class="mb-5 pb-5" style="border-bottom: 1px solid var(--border-color);">
-        <h2 class="section-title">About</h2>
-        <div class="container about-text">
-            <h4 class="fw-bold mb-4">I build marketing systems, therefore I grow.</h4>
-            <p>
-                Young marketing operations specialist with hands-on experience scaling e-commerce brands on Amazon and social platforms. 
-                In 5 months at a US startup, I built full marketing & ops infrastructure — from influencer pipelines and AI content engines to payment funnels and legal-compliant landing pages.
-            </p>
-            <p class="about-quote">
-                “Marketing is more than campaigns. It’s building intelligent, scalable systems where creativity meets automation and data.”
-            </p>
-            <p>
-                I learn extremely fast — I quickly master new tools and independently dive deep into unfamiliar domains, whether it's a new ad platform, automation builder, legal compliance service, or anything else.
-            </p>
-        </div>
-    </section>
-
-    <div class="row">
-        <aside class="col-lg-4" id="skills">
-            <div class="card p-4 mb-4">
-                <h4 class="fw-bold mb-4">Technical Stack</h4>
-                
-                <div class="mb-4">
-                    <h6 class="text-muted small text-uppercase fw-bold mb-2">Web & Infrastructure</h6>
-                    <span class="badge badge-skill">Tilda / Stripe</span>
-                    <span class="badge badge-skill">GitHub / GoDaddy</span>
-                    <span class="badge badge-skill">HTML / CSS / JS (Basics)</span>
-                    <span class="badge badge-skill">Python (Basics)</span>
-                </div>
-                <div class="mb-4">
-                    <h6 class="text-muted small text-uppercase fw-bold mb-2">E-com & Ops</h6>
-                    <span class="badge badge-skill">Amazon Seller Central</span>
-                    <span class="badge badge-skill">ManyChat Automations</span>
-                    <span class="badge badge-skill">InfoPlus WMS</span>
-                    <span class="badge badge-skill">Meta & Pinterest Ads</span>
-                </div>
-                <div class="mb-2">
-                    <h6 class="text-muted small text-uppercase fw-bold mb-2">AI & Creative</h6>
-                    <span class="badge badge-skill">Advanced Prompting</span>
-                    <span class="badge badge-skill">Arena AI</span>
-                    <span class="badge badge-skill">CapCut / Figma / Canva</span>
-                </div>
-            </div>
-
-            <div class="card p-4 mb-4">
-                <h4 class="fw-bold mb-3">Languages</h4>
-                <div class="d-flex justify-content-between mb-2">
-                    <span>English</span>
-                    <span class="fw-bold" style="color: var(--accent-blue);">B2</span>
-                </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Russian (native)</span>
-                    <span class="fw-bold" style="color: var(--accent-blue);">C2</span>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <span>German</span>
-                    <span class="fw-bold" style="color: var(--accent-blue);">A2-B1</span>
-                </div>
-            </div>
-
-            <div class="card p-4">
-                <h4 class="fw-bold mb-3">Mindset & Education</h4>
-                <ul class="list-unstyled small text-muted">
-                    <li class="mb-3"><span class="fw-bold" style="color: var(--accent-blue);">✓</span> Strong analytical foundation from high school (CS & logic)</li>
-                    <li class="mb-3"><span class="fw-bold" style="color: var(--accent-blue);">✓</span> Self-taught developer mindset</li>
-                    <li class="mb-3"><span class="fw-bold" style="color: var(--accent-blue);">✓</span> Extremely fast learner — quickly master new tools and independently dive into unknown domains</li>
-                    <li><span class="fw-bold" style="color: var(--accent-blue);">✓</span> Rapid adoption of AI & automation technologies</li>
-                </ul>
-            </div>
+          </article>
         </aside>
-
-        <section class="col-lg-8" id="experience">
-            <h2 class="section-title">Professional Experience</h2>
-            
-            <div class="card p-4 mb-4">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <h4 class="fw-bold mb-0">Marketing Assistant / Ops Specialist</h4>
-                        <p style="color: var(--accent-blue);" class="fw-semibold mb-0">US Consumer Goods Startup (Ezflame)</p>
-                    </div>
-                </div>
-                <hr>
-                
-                <h6 class="fw-bold text-uppercase small text-muted">Influencer & Creator Management</h6>
-                <ul class="text-muted">
-                    <li><strong>Amazon Creator Connections:</strong> Processed 150+ applications, vetting top 41 creators based on content quality and audience alignment.</li>
-                    <li><strong>Full-cycle Management:</strong> Managed product logistics via Infoplus, quality control of video deliverables, and gathered product feedback for R&D.</li>
-                    <li><strong>Pinterest Outreach:</strong> Negotiated collaborations and generated 100+ AI-visuals for creator content.</li>
-                </ul>
-
-                <h6 class="fw-bold text-uppercase small text-muted mt-4">Web Development & Automation</h6>
-                <ul class="text-muted">
-                    <li><strong>Tilda & Stripe Integration:</strong> Built a fully functional e-commerce landing page with Stripe payment gateway and Google Sheets data sync.</li>
-                    <li><strong>Technical SEO & Compliance:</strong> Managed domain/subdomain setups (GoDaddy) and implemented legal documentation using Termly via custom code injections on GitHub.</li>
-                    <li><strong>Chatbot Funnels:</strong> Built ManyChat automations for Facebook lead gen, distributing coupons and tracking individual Amazon affiliate links.</li>
-                </ul>
-
-                <h6 class="fw-bold text-uppercase small text-muted mt-4">Content & Social Media</h6>
-                <ul class="text-muted">
-                    <li><strong>AI Content Engine:</strong> Created and adapted content for TikTok, IG, FB, and Pinterest using AI for image, video, and music generation.</li>
-                    <li><strong>Visual Assets:</strong> Designed One-pagers, listing photo funnels, flyers, and business cards in Figma.</li>
-                    <li><strong>Video Production:</strong> Produced assembly guides and "talking head" Reels with dynamic subtitles.</li>
-                </ul>
-
-                <h6 class="fw-bold text-uppercase small text-muted mt-4">Advertising & Analytics</h6>
-                <ul class="text-muted">
-                    <li><strong>Campaign Management:</strong> Supported Meta, Amazon, and Pinterest ad launches.</li>
-                    <li><strong>Competitive Intelligence:</strong> Conducted Amazon market analysis using third-party tools to track competitor pricing and sentiment.</li>
-                    <li><strong>Reporting:</strong> Maintained daily reports and complex Pivot Tables in Google Sheets to track ROAS and operational efficiency.</li>
-                </ul>
+        <section class="reveal" id="experience">
+          <article class="panel card-pad experience">
+            <p class="kicker" data-en="Experience & Impact" data-ru="Опыт и вклад">Experience & Impact</p>
+            <h2 class="title" data-en="Marketing Operations Specialist" data-ru="Специалист по маркетинговым операциям">Marketing Operations Specialist</h2>
+            <p class="company" data-en="US Consumer Goods Startup (Amazon-focused)" data-ru="Американский D2C-стартап (Amazon-focused)">US Consumer Goods Startup (Amazon-focused)</p>
+            <div class="exp-groups">
+              <section class="exp"><p class="exp-title" data-en="Influencer & Creator Management" data-ru="Инфлюенсеры и креаторы">Influencer & Creator Management</p><ul><li data-en="Owned full-cycle influencer campaigns via Amazon Creator Connections: processed 150+ applications, deeply evaluated creators (content quality, audience, engagement), and selected top performers" data-ru="Вела полный цикл инфлюенсер-кампаний через Amazon Creator Connections: обработала 150+ откликов, глубоко анализировала блогеров (контент, аудитория, вовлеченность) и отбирала лучших">Owned full-cycle influencer campaigns via Amazon Creator Connections: processed 150+ applications, deeply evaluated creators (content quality, audience, engagement), and selected top performers</li><li data-en="Managed creator pipeline end-to-end: logistics via Infoplus, content QA, iteration cycles, and structured feedback collection for product insights" data-ru="Вела полный цикл работы с блогерами: логистика через Infoplus, контроль качества контента, доработки и сбор фидбэка для улучшения продукта">Managed creator pipeline end-to-end: logistics via Infoplus, content QA, iteration cycles, and structured feedback collection for product insights</li><li data-en="Built and used custom workflows and tools for influencer sourcing and analysis across platforms" data-ru="Выстраивала и использовала собственные процессы и инструменты для поиска и анализа блогеров на разных платформах">Built and used custom workflows and tools for influencer sourcing and analysis across platforms</li></ul></section>
+              <section class="exp"><p class="exp-title" data-en="Content Production & Social Media" data-ru="Контент и соцсети">Content Production & Social Media</p><ul><li data-en="Owned full-cycle content production: idea generation, AI media creation (images, video, music), editing, and distribution" data-ru="Вела полный цикл создания контента: от идеи до публикации (AI-генерация изображений, видео и музыки, монтаж и дистрибуция)">Owned full-cycle content production: idea generation, AI media creation (images, video, music), editing, and distribution</li><li data-en="Managed and scaled content across Instagram, TikTok, YouTube, Pinterest, and Facebook with platform-specific adaptation" data-ru="Развивала и масштабировала контент в Instagram, TikTok, YouTube, Pinterest и Facebook с адаптацией под каждую платформу">Managed and scaled content across Instagram, TikTok, YouTube, Pinterest, and Facebook with platform-specific adaptation</li><li data-en="Produced instructional and promotional videos (including clear product assembly guides)" data-ru="Создавала обучающие и рекламные видео (включая инструкции по сборке продукта)">Produced instructional and promotional videos (including clear product assembly guides)</li></ul></section>
+              <section class="exp"><p class="exp-title" data-en="Outreach & Partnerships" data-ru="Партнёрства и рассылки">Outreach & Partnerships</p><ul><li data-en="Designed and executed outreach campaigns to businesses with highly personalized offers (including custom visuals tailored to each client)" data-ru="Разрабатывала и запускала рассылки с высокой степенью персонализации (включая кастомные визуалы под конкретные бизнесы)">Designed and executed outreach campaigns to businesses with highly personalized offers (including custom visuals tailored to each client)</li></ul></section>
+              <section class="exp"><p class="exp-title" data-en="Automation & Funnels" data-ru="Автоматизация и воронки">Automation & Funnels</p><ul><li data-en="Built and managed automation funnels in ManyChat (coupon distribution, user flows, lead handling), including manual optimization and user communication" data-ru="Строила и вела воронки в ManyChat (купоны, сценарии общения, обработка лидов), вручную оптимизировала и подключалась к диалогам при необходимости">Built and managed automation funnels in ManyChat (coupon distribution, user flows, lead handling), including manual optimization and user communication</li></ul></section>
+              <section class="exp"><p class="exp-title" data-en="Advertising & Analytics" data-ru="Реклама и аналитика">Advertising & Analytics</p><ul><li data-en="Worked with ad campaigns (Amazon Ads, Meta Ads, Pinterest Ads): launch, testing, and performance analysis" data-ru="Запускала и оптимизировала рекламные кампании (Amazon, Meta, Pinterest): тестирование, анализ и улучшение эффективности">Worked with ad campaigns (Amazon Ads, Meta Ads, Pinterest Ads): launch, testing, and performance analysis</li><li data-en="Conducted competitor research and campaign analysis using Google Workspace and external tools" data-ru="Проводила анализ конкурентов и кампаний с использованием Google Workspace и внешних инструментов">Conducted competitor research and campaign analysis using Google Workspace and external tools</li></ul></section>
+              <section class="exp"><p class="exp-title" data-en="Web & Systems" data-ru="Сайты и системы">Web & Systems</p><ul><li data-en="Developed simple websites using HTML/CSS/JS with AI-assisted development (generation + manual code refinement) and no-code solutions (Tilda), including Stripe payments and data collection integrations" data-ru="Создавала сайты на HTML, CSS, JavaScript с использованием AI (генерация + ручная доработка кода), а также на Tilda, включая интеграцию Stripe и систем сбора данных">Developed simple websites (HTML, CSS, JavaScript) and no-code solutions (Tilda), including Stripe payments and data collection integrations</li><li data-en="Created landing pages with legal documentation (Termly) and deployed via GitHub and custom domains" data-ru="Создавала лендинги с юридической документацией (Termly) и размещала через GitHub и домены">Created landing pages with legal documentation (Termly) and deployed via GitHub and custom domains</li></ul></section>
+              <section class="exp"><p class="exp-title" data-en="Operations & Coordination" data-ru="Операционные процессы">Operations & Coordination</p><ul><li data-en="Coordinated contractors, sourcing specialists (videographers, actors), and participated in production shoots" data-ru="Координировала подрядчиков, находила специалистов (видеографы, актеры), участвовала в съемках">Coordinated contractors, sourcing specialists (videographers, actors), and participated in production shoots</li><li data-en="Worked with Amazon Seller Central: analytics, listings, coupons, affiliate links" data-ru="Работала с Amazon Seller Central (аналитика, листинги, купоны, ссылки)">Worked with Amazon Seller Central: analytics, listings, coupons, affiliate links</li><li data-en="Analyzed performance and translated data into clear insights and actions for the team" data-ru="Анализировала результаты и превращала данные в конкретные решения и действия для команды">Analyzed performance and translated data into clear insights and actions for the team</li></ul></section>
             </div>
+          </article>
         </section>
-    </div>
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="mt-5">
-        <h2 class="section-title">Portfolio</h2>
-
-        <div id="portfolioCarousel" class="carousel slide" data-bs-ride="false">
-            <!-- No indicators (progress bar removed) -->
-
-            <div class="carousel-inner">
-                <!-- Slide 1: 3 Reels -->
-                <div class="carousel-item active">
-                    <div class="row g-4">
-                        <!-- Reel 1 -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card p-3 h-100">
-                                <div class="portfolio-media">
-                                    <div class="shorts-embed">
-                                        <iframe src="https://www.youtube.com/embed/4dfkyAlZr4o" title="Funny raccoons Ezflame reel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                    </div>
-                                </div>
-                                <h5 class="mt-3">Funny Raccoons Reel</h5>
-                                <p class="text-muted small">Fun AI-generated reel featuring raccoons — fully created with AI tools.</p>
-                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-reel1">View Fullscreen</button>
-                            </div>
-                        </div>
-
-                        <!-- Reel 2 -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card p-3 h-100">
-                                <div class="portfolio-media">
-                                    <div class="shorts-embed">
-                                        <iframe src="https://www.youtube.com/embed/toNRE7qIb4k" title="AI inch-tall climber reel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                    </div>
-                                </div>
-                                <h5 class="mt-3">Inch-Tall Climber Reel</h5>
-                                <p class="text-muted small">Tiny rescuer climbs garland to the top of the fireplace — epic AI-generated shot.</p>
-                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-reel2">View Fullscreen</button>
-                            </div>
-                        </div>
-
-                        <!-- Reel 3 -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card p-3 h-100">
-                                <div class="portfolio-media">
-                                    <div class="shorts-embed">
-                                        <iframe src="https://www.youtube.com/embed/KL7LPsjh-1c" title="Cozy tent fireplace scene" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                    </div>
-                                </div>
-                                <h5 class="mt-3">Cozy Tent Fireplace Scene</h5>
-                                <p class="text-muted small">Camera zooms into a tent revealing a relaxing moment by the Ezflame — pure AI generation.</p>
-                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-reel3">View Fullscreen</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 2: Assembly + Meta + Flyer -->
-                <div class="carousel-item">
-                    <div class="row g-4">
-                        <!-- Assembly Video -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card p-3 h-100">
-                                <div class="portfolio-media">
-                                    <iframe src="https://www.youtube.com/embed/yidzp8ZLLc4" title="Ezflame assembly instruction" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                </div>
-                                <h5 class="mt-3">Assembly Instruction Video</h5>
-                                <p class="text-muted small">Clear step-by-step montage for product assembly, edited in CapCut.</p>
-                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-assembly">View Fullscreen</button>
-                            </div>
-                        </div>
-
-                        <!-- Meta Table -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card p-3 h-100">
-                                <div class="portfolio-media">
-                                    <img src="meta.png" alt="Meta campaigns analysis table" class="img-fluid">
-                                </div>
-                                <h5 class="mt-3">Meta Ads Performance Table</h5>
-                                <p class="text-muted small">Comparative analysis of cost and effectiveness for Meta ad campaigns.</p>
-                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-meta">View Image</button>
-                            </div>
-                        </div>
-
-                        <!-- Flyer -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card p-3 h-100">
-                                <div class="portfolio-media">
-                                    <img src="flyer.png" alt="Ezflame promotional flyer" class="img-fluid">
-                                </div>
-                                <h5 class="mt-3">Promotional Flyer</h5>
-                                <p class="text-muted small">Flyer design for Ezflame promotion, created in Figma.</p>
-                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-flyer">View Image</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 3: Tilda + Email + One-Pagers -->
-                <div class="carousel-item">
-                    <div class="row g-4">
-                        <!-- Tilda -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card p-3 h-100">
-                                <div class="portfolio-media">
-                                    <video controls class="w-100">
-                                        <source src="Tilda.mp4" type="video/mp4">
-                                    </video>
-                                </div>
-                                <h5 class="mt-3">Tilda Landing Page Walkthrough</h5>
-                                <p class="text-muted small">Screen recording of the e-commerce site with Stripe and Google Sheets integration.</p>
-                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-tilda">View Video</button>
-                            </div>
-                        </div>
-
-                        <!-- Email -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card p-3 h-100">
-                                <div class="portfolio-media">
-                                    <img src="email.jpeg" alt="Personalized outreach email" class="img-fluid">
-                                </div>
-                                <h5 class="mt-3">Personalized Outreach Email</h5>
-                                <p class="text-muted small">Customized collaboration proposal with AI-inserted fireplace in recipient's interior photo.</p>
-                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-email">View Image</button>
-                            </div>
-                        </div>
-
-                        <!-- One-Pagers -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card p-3 h-100">
-                                <div class="portfolio-media">
-                                    <div class="row g-2">
-                                        <div class="col-6"><img src="one-pager1.png" alt="One-pager 1" class="img-fluid rounded"></div>
-                                        <div class="col-6"><img src="one-pager2.png" alt="One-pager 2" class="img-fluid rounded"></div>
-                                    </div>
-                                </div>
-                                <h5 class="mt-3">Creator One-Pager</h5>
-                                <p class="text-muted small">Information sheet for influencers, refined and updated in Figma.</p>
-                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-onepager">View Images</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 4: Bloggers + ManyChat + AI Photos -->
-                <div class="carousel-item">
-                    <div class="row g-4">
-                        <!-- Bloggers -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card p-3 h-100">
-                                <div class="portfolio-media">
-                                    <img src="blogers.png" alt="Bloggers sourcing table" class="img-fluid">
-                                </div>
-                                <h5 class="mt-3">Bloggers Sourcing & Vetting Table</h5>
-                                <p class="text-muted small">Filtered list of bloggers by niche, engagement rate, and fake followers percentage.</p>
-                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-bloggers">View Image</button>
-                            </div>
-                        </div>
-
-                        <!-- ManyChat -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card p-3 h-100">
-                                <div class="portfolio-media">
-                                    <img src="manychat.jpeg" alt="ManyChat full funnel" class="img-fluid">
-                                </div>
-                                <h5 class="mt-3">ManyChat Automation Flow</h5>
-                                <p class="text-muted small">Complete funnel: coupon issuance, FAQ responses, push notifications, lead qualification.</p>
-                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-manychat">View Image</button>
-                            </div>
-                        </div>
-
-                        <!-- AI Photos Collage -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card p-3 h-100">
-                                <div class="portfolio-media">
-                                    <div class="row g-2 collage-grid">
-                                        <div class="col-6"><img src="p1.png" alt="AI visual 1" class="img-fluid rounded"></div>
-                                        <div class="col-6"><img src="p2.png" alt="AI visual 2" class="img-fluid rounded"></div>
-                                        <div class="col-6"><img src="p3.png" alt="AI visual 3" class="img-fluid rounded"></div>
-                                        <div class="col-6"><img src="p4.png" alt="AI visual 4" class="img-fluid rounded"></div>
-                                    </div>
-                                </div>
-                                <h5 class="mt-3">AI-Generated Visuals Pack for Pinterest Creator</h5>
-                                <p class="text-muted small">Sample from 100+ custom visuals generated with AI for one Pinterest collaboration.</p>
-                                <button class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#modal-photos">View Collage</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#portfolioCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#portfolioCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+      </div>
+    </section>
+    <section class="section" id="portfolio">
+      <div class="wrap">
+        <div class="head reveal">
+          <div>
+            <p class="kicker" data-en="Selected Work" data-ru="Примеры работ">Selected Work</p>
+          </div>
         </div>
+        <div class="portfolio-shell reveal">
+          <button class="slider-btn prev" type="button" aria-label="Previous projects"><i class="bi bi-arrow-left"></i></button>
+          <div class="viewport"><div class="track">
+            <article class="panel work"><button class="media" type="button" data-preview="" data-media-type="youtube" data-media-src="https://www.youtube.com/embed/4dfkyAlZr4o" data-media-title="AI-Driven Social Media Content System"><iframe src="https://www.youtube.com/embed/4dfkyAlZr4o?mute=1" title="AI-Driven Social Media Content System" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></button><div class="copy"><div class="meta"><span data-en="Content systems" data-ru="Контент-системы">Content systems</span></div><h4 data-en="AI-Driven Social Media Content System" data-ru="AI-система создания контента для соцсетей">AI-Driven Social Media Content System</h4><p data-en="Built a scalable AI-driven content system: from idea generation to media creation, editing, and multi-platform distribution." data-ru="Выстроила масштабируемую AI-систему создания контента: от генерации идей до создания медиа, монтажа и дистрибуции на разных платформах">Built a scalable AI-driven content system: from idea generation to media creation, editing, and multi-platform distribution.</p></div></article>
+            <article class="panel work"><button class="media" type="button" data-preview="" data-media-type="video" data-media-src="Tilda.mp4" data-media-title="Web & No-Code Solutions for Marketing"><video preload="metadata" muted playsinline><source src="Tilda.mp4" type="video/mp4"></video></button><div class="copy"><div class="meta"><span data-en="Web & no-code" data-ru="Web и no-code">Web & no-code</span></div><h4 data-en="Web & No-Code Solutions for Marketing" data-ru="Сайты и no-code решения для маркетинга">Web & No-Code Solutions for Marketing</h4><p data-en="Developed simple websites using HTML/CSS/JS and Tilda, including payment integration (Stripe) and data collection systems." data-ru="Создавала сайты на HTML/CSS/JS и на Tilda, подключала Stripe и системы сбора данных">Developed simple websites using HTML/CSS/JS (AI + manual code tweaks) and Tilda, including payment integration (Stripe) and data collection systems.</p></div></article>
+            <article class="panel work"><button class="media" type="button" data-preview="" data-media-type="image" data-media-src="blogers.png" data-media-title="Amazon Product Growth & Influencer Campaigns"><img src="blogers.png" alt="Bloggers sourcing table" loading="lazy"></button><div class="copy"><div class="meta"><span data-en="Amazon growth" data-ru="Рост на Amazon">Amazon growth</span></div><h4 data-en="Amazon Product Growth & Influencer Campaigns" data-ru="Рост продаж на Amazon и инфлюенсер-кампании">Amazon Product Growth & Influencer Campaigns</h4><p data-en="Managed end-to-end influencer campaigns and content strategy for a product on Amazon. Handled creator sourcing, outreach, content quality control, and performance optimization." data-ru="Вела полный цикл инфлюенсер-маркетинга и контента для продукта на Amazon: поиск блогеров, коммуникация, контроль качества и оптимизация результатов.">Managed end-to-end influencer campaigns and content strategy for a product on Amazon. Handled creator sourcing, outreach, content quality control, and performance optimization.</p></div></article>
+            <article class="panel work"><button class="media" type="button" data-preview="" data-media-type="image" data-media-src="manychat.jpeg" data-media-title="Marketing Automation & Funnel System (ManyChat)"><img src="manychat.jpeg" alt="ManyChat funnel" loading="lazy"></button><div class="copy"><div class="meta"><span data-en="Automation" data-ru="Автоматизация">Automation</span></div><h4 data-en="Marketing Automation & Funnel System (ManyChat)" data-ru="Автоматизация маркетинга и воронки (ManyChat)">Marketing Automation & Funnel System (ManyChat)</h4><p data-en="Built automation flows for user communication, coupon distribution, and lead handling. Monitored and optimized funnel performance." data-ru="Построила автоматические воронки для коммуникации с пользователями, выдачи купонов и обработки лидов, отслеживала и улучшала их эффективность">Built automation flows for user communication, coupon distribution, and lead handling. Monitored and optimized funnel performance.</p></div></article>
+            <article class="panel work"><button class="media" type="button" data-preview="" data-media-type="image" data-media-src="meta.png" data-media-title="Advertising Campaigns & Performance Analysis"><img src="meta.png" alt="Meta campaigns analysis table" loading="lazy"></button><div class="copy"><div class="meta"><span data-en="Paid media" data-ru="Платный трафик">Paid media</span></div><h4 data-en="Advertising Campaigns & Performance Analysis" data-ru="Рекламные кампании и аналитика">Advertising Campaigns & Performance Analysis</h4><p data-en="Launched and analyzed ad campaigns across Amazon, Meta, and Pinterest, focusing on cost efficiency and performance optimization." data-ru="Запускала и анализировала рекламные кампании в Amazon, Meta и Pinterest, оптимизируя стоимость и эффективность.">Launched and analyzed ad campaigns across Amazon, Meta, and Pinterest, focusing on cost efficiency and performance optimization.</p></div></article>
+            <article class="panel work"><button class="media" type="button" data-preview="" data-media-type="image" data-media-src="flyer.png" data-media-title="Promotional Flyer"><img src="flyer.png" alt="Promotional flyer" loading="lazy"></button><div class="copy"><div class="meta"><span data-en="Design" data-ru="Дизайн">Design</span></div><h4 data-en="Marketing Flyer Design (Figma)" data-ru="Дизайн промо-флаера (Figma)">Marketing Flyer Design (Figma)</h4><p data-en="Designed a promotional flyer with product info, branding, and a QR code linking to Amazon. Focused on clarity, visual balance, and easy-to-scan layout." data-ru="Создала промо-флаер с информацией о продукте, брендингом и QR-кодом на Amazon. Сделала акцент на понятной структуре и визуальном балансе.">Designed a promotional flyer with product info, branding, and a QR code linking to Amazon. Focused on clarity, visual balance, and easy-to-scan layout.</p></div></article>
+          </div></div>
+          <button class="slider-btn next" type="button" aria-label="Next projects"><i class="bi bi-arrow-right"></i></button>
+        </div>
+        <div class="slider-foot reveal"></div>
+      </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="p-5 mt-5">
-        <div class="row align-items-center">
-            <div class="col-lg-5 mb-5 mb-lg-0">
-                <h2 class="fw-bold mb-4" style="color: #fff;">Let's Connect</h2>
-                <p class="text-muted mb-4 fs-5">
-                    Open to new opportunities, collaborations, and interesting projects in marketing operations, e-commerce, and AI-driven growth.
-                </p>
-            </div>
-            <div class="col-lg-7">
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <div class="d-flex align-items-start">
-                            <i class="bi bi-envelope-fill contact-icon me-3"></i>
-                            <div>
-                                <h6 class="mb-1">Email</h6>
-                                <a href="mailto:emiliaar7l@gmail.com" class="contact-link fs-5">emiliaar7l@gmail.com</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="d-flex align-items-start">
-                            <i class="bi bi-telephone-fill contact-icon me-3"></i>
-                            <div>
-                                <h6 class="mb-1">Phone</h6>
-                                <a href="tel:+79992173339" class="contact-link fs-5">+7 (999) 217-33-39</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="d-flex align-items-start">
-                            <i class="bi bi-whatsapp contact-icon me-3"></i>
-                            <div>
-                                <h6 class="mb-1">WhatsApp</h6>
-                                <a href="https://wa.me/79992173339" target="_blank" class="contact-link fs-5">+7 (999) 217-33-39</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="d-flex align-items-start">
-                            <i class="bi bi-telegram contact-icon me-3"></i>
-                            <div>
-                                <h6 class="mb-1">Telegram</h6>
-                                <a href="https://t.me/FreiHirn" target="_blank" class="contact-link fs-5">@FreiHirn</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="d-flex align-items-start">
-                            <i class="bi bi-facebook contact-icon me-3 social-icon"></i>
-                            <div>
-                                <h6 class="mb-1">Facebook</h6>
-                                <a href="https://www.facebook.com/profile.php?id=100082798489952" target="_blank" class="contact-link fs-5">Emilia Shakaeva</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="d-flex align-items-start">
-                            <i class="bi bi-instagram contact-icon me-3 social-icon"></i>
-                            <div>
-                                <h6 class="mb-1">Instagram</h6>
-                                <a href="https://www.instagram.com/emilia_7l" target="_blank" class="contact-link fs-5">@emilia_7l</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section class="section" id="contact">
+      <div class="wrap">
+        <article class="panel card-pad contact reveal">
+          <div>
+            <p class="kicker" data-en="Contact" data-ru="Контакты">Contact</p>
+            <h3 data-en="Let's Connect" data-ru="Давайте свяжемся">Let's Connect</h3>
+            <p data-en="Open to opportunities in marketing operations, growth, and AI-driven systems. Interested in building scalable and efficient solutions." data-ru="Открыта к новым возможностям, коллаборациям и интересным проектам в маркетинговых операциях, e‑commerce и AI‑driven‑росте.">Open to opportunities in marketing operations, growth, and AI-driven systems. Interested in building scalable and efficient solutions.</p>
+            <a class="btn btn-primary" href="mailto:emiliaar7l@gmail.com" data-en="Email Me" data-ru="Отправить email">Email Me</a>
+          </div>
+          <div class="contact-grid">
+            <div class="contact-item"><i class="bi bi-envelope-fill"></i><div><h4 data-en="Email" data-ru="Email">Email</h4><a href="mailto:emiliaar7l@gmail.com">emiliaar7l@gmail.com</a></div></div>
+            <div class="contact-item"><i class="bi bi-telephone-fill"></i><div><h4 data-en="Phone" data-ru="Телефон">Phone</h4><a href="tel:+79992173339">+7 (999) 217-33-39</a></div></div>
+            <div class="contact-item"><i class="bi bi-whatsapp"></i><div><h4 data-en="WhatsApp" data-ru="WhatsApp">WhatsApp</h4><a href="https://wa.me/79992173339" target="_blank" rel="noreferrer">+7 (999) 217-33-39</a></div></div>
+            <div class="contact-item"><i class="bi bi-telegram"></i><div><h4 data-en="Telegram" data-ru="Telegram">Telegram</h4><a href="https://t.me/FreiHrn" target="_blank" rel="noreferrer">@FreiHrn</a></div></div>
+            <div class="contact-item"><i class="bi bi-facebook"></i><div><h4 data-en="Facebook" data-ru="Facebook">Facebook</h4><a href="https://www.facebook.com/profile.php?id=100082798489952" target="_blank" rel="noreferrer">Emilia Shakaeva</a></div></div>
+            <div class="contact-item"><i class="bi bi-instagram"></i><div><h4 data-en="Instagram" data-ru="Instagram">Instagram</h4><a href="https://www.instagram.com/emilia_7l" target="_blank" rel="noreferrer">@emilia_7l</a></div></div>
+          </div>
+        </article>
+      </div>
     </section>
+  </main>
 
-</main>
-
-<footer class="text-center text-muted">
-    <div class="container">
-        <small>© 2026 EMILIA SHAKAEVA | JUNIOR MARKETING OPERATIONS</small>
-    </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- All Modal Windows (place this right before </body>) -->
-<!-- Reel 1 -->
-<div class="modal fade" id="modal-reel1" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content bg-dark border-0">
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-0">
-                <iframe width="100%" height="600" src="https://www.youtube.com/embed/4dfkyAlZr4o" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Reel 2 -->
-<div class="modal fade" id="modal-reel2" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content bg-dark border-0">
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-0">
-                <iframe width="100%" height="600" src="https://www.youtube.com/embed/toNRE7qIb4k" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Reel 3 -->
-<div class="modal fade" id="modal-reel3" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content bg-dark border-0">
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-0">
-                <iframe width="100%" height="600" src="https://www.youtube.com/embed/KL7LPsjh-1c" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Assembly Video -->
-<div class="modal fade" id="modal-assembly" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content bg-dark border-0">
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-0">
-                <iframe width="100%" height="600" src="https://www.youtube.com/embed/yidzp8ZLLc4" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Meta Table -->
-<div class="modal fade" id="modal-meta" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content bg-dark border-0">
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-3 text-center">
-                <img src="meta.png" alt="Meta campaigns table" class="img-fluid rounded">
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Flyer -->
-<div class="modal fade" id="modal-flyer" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content bg-dark border-0">
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-3 text-center">
-                <img src="flyer.png" alt="Promotional flyer" class="img-fluid rounded">
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Tilda Video -->
-<div class="modal fade" id="modal-tilda" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content bg-dark border-0">
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-0">
-                <video controls width="100%" height="600">
-                    <source src="Tilda.mp4" type="video/mp4">
-                </video>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Personalized Email -->
-<div class="modal fade" id="modal-email" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content bg-dark border-0">
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-3 text-center">
-                <img src="email.jpeg" alt="Personalized email" class="img-fluid rounded">
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- One-Pagers -->
-<div class="modal fade" id="modal-onepager" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content bg-dark border-0">
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-3">
-                <div class="row g-3">
-                    <div class="col-12 col-md-6"><img src="one-pager1.png" alt="One-pager 1" class="img-fluid rounded"></div>
-                    <div class="col-12 col-md-6"><img src="one-pager2.png" alt="One-pager 2" class="img-fluid rounded"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Bloggers Table -->
-<div class="modal fade" id="modal-bloggers" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content bg-dark border-0">
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-3 text-center">
-                <img src="blogers.png" alt="Bloggers table" class="img-fluid rounded">
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ManyChat -->
-<div class="modal fade" id="modal-manychat" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content bg-dark border-0">
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-3 text-center">
-                <img src="manychat.jpeg" alt="ManyChat funnel" class="img-fluid rounded">
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- AI Photos Collage -->
-<div class="modal fade" id="modal-photos" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content bg-dark border-0">
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-4">
-                <div class="row g-3">
-                    <div class="col-12 col-md-6"><img src="p1.png" alt="AI visual 1" class="img-fluid rounded"></div>
-                    <div class="col-12 col-md-6"><img src="p2.png" alt="AI visual 2" class="img-fluid rounded"></div>
-                    <div class="col-12 col-md-6"><img src="p3.png" alt="AI visual 3" class="img-fluid rounded"></div>
-                    <div class="col-12 col-md-6"><img src="p4.png" alt="AI visual 4" class="img-fluid rounded"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+  <footer><div class="wrap"><small data-en="© Emilia Shakaeva — Built with custom code and AI-assisted workflows" data-ru="© Эмилия Шакаева — сайт создан с использованием AI и ручной разработки">© Emilia Shakaeva — Built with custom code and AI-assisted workflows</small></div></footer>
+  <div class="modal" aria-hidden="true"><div class="dialog" role="dialog" aria-modal="true" aria-label="Media preview"><button class="close" type="button" aria-label="Close preview"><i class="bi bi-x-lg"></i></button><div class="modal-body"></div></div></div>
+  <script>
+    (()=>{const d=document,root=d.documentElement,body=d.body,toggle=d.querySelector('.toggle'),panel=d.querySelector('.nav-panel'),links=[...d.querySelectorAll('.nav-link')],langBtns=[...d.querySelectorAll('.lang button')],nodes=[...d.querySelectorAll('[data-en],[data-ru]')],title=d.querySelector('title'),reveals=[...d.querySelectorAll('.reveal')],track=d.querySelector('.track'),prev=d.querySelector('.prev'),next=d.querySelector('.next'),current=d.querySelector('.current'),total=d.querySelector('.total'),slides=track?[...track.children]:[],modal=d.querySelector('.modal'),modalBody=d.querySelector('.modal-body'),closeBtn=d.querySelector('.close');let slider=0,cards=getCards();
+      const setLang=lang=>{root.lang=lang;nodes.forEach(n=>{const t=n.getAttribute('data-'+lang);if(t!==null)n.tagName==='TITLE'?n.textContent=t:n.innerHTML=t});title.textContent=title.getAttribute('data-'+lang)||title.textContent;langBtns.forEach(b=>b.classList.toggle('active',b.dataset.langTarget===lang));localStorage.setItem('lang',lang)};
+      langBtns.forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.langTarget)));setLang(localStorage.getItem('lang')||'en');
+      if(toggle&&panel){toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!open));panel.classList.toggle('open',!open)});links.forEach(l=>l.addEventListener('click',()=>{toggle.setAttribute('aria-expanded','false');panel.classList.remove('open')}));d.addEventListener('click',e=>{if(!panel.contains(e.target)&&!toggle.contains(e.target)){toggle.setAttribute('aria-expanded','false');panel.classList.remove('open')}})}
+      const sectionObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-35% 0px -50% 0px',threshold:.05});links.map(l=>d.querySelector(l.getAttribute('href'))).filter(Boolean).forEach(s=>sectionObserver.observe(s));
+      const revealObserver=new IntersectionObserver((entries,o)=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');o.unobserve(e.target)}}),{threshold:.14});reveals.forEach((n,i)=>{n.style.transitionDelay=(i%6)*60+'ms';revealObserver.observe(n)});
+      function getCards(){if(window.innerWidth<=720)return 1;if(window.innerWidth<=980)return 2;return 3}function max(){return Math.max(0,slides.length-cards)}function update(){if(!track)return;const w=slides[0]?slides[0].getBoundingClientRect().width:0,g=parseFloat(getComputedStyle(track).columnGap||getComputedStyle(track).gap||'16'),x=(w+g)*slider;track.style.transform=`translateX(${-x}px)`;const pages=Math.max(1,max()+1);if(current)current.textContent=String(Math.min(slider+1,pages));if(total)total.textContent=String(pages);if(prev)prev.disabled=slider<=0;if(next)next.disabled=slider>=max()}function move(dir){slider=Math.min(max(),Math.max(0,slider+dir));update()}if(prev)prev.addEventListener('click',()=>move(-1));if(next)next.addEventListener('click',()=>move(1));let raf;window.addEventListener('resize',()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{cards=getCards();slider=Math.min(slider,max());update()})});update();
+      const build=(type,src,label)=>{modalBody.innerHTML='';let n;if(type==='image'){n=d.createElement('img');n.src=src;n.alt=label||''}else if(type==='video'){n=d.createElement('video');n.src=src;n.controls=true;n.autoplay=true}else{n=d.createElement('iframe');n.src=src+(src.includes('?')?'&autoplay=1':'?autoplay=1');n.title=label||'Media preview';n.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';n.referrerPolicy='strict-origin-when-cross-origin';n.allowFullscreen=true}modalBody.appendChild(n)};
+      const open=(type,src,label)=>{build(type,src,label);modal.classList.add('open');modal.setAttribute('aria-hidden','false');body.style.overflow='hidden'},close=()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true');body.style.overflow='';modalBody.innerHTML=''};
+      d.querySelectorAll('.media').forEach(el=>el.addEventListener('click',()=>open(el.dataset.mediaType,el.dataset.mediaSrc,el.dataset.mediaTitle)));closeBtn.addEventListener('click',close);modal.addEventListener('click',e=>{if(e.target===modal)close()});d.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close();if(e.key==='ArrowLeft')move(-1);if(e.key==='ArrowRight')move(1)})})();
+  </script>
 </body>
 </html>
